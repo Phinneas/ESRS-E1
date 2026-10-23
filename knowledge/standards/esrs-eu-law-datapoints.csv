@@ -1,0 +1,22 @@
+standard,dr_code,datapoint,appendix_table,sfdr,pillar3,benchmark_reg,eu_climate_law
+ESRS 2,GOV-1,Percentage of board members who are independent,main body,,,yes,
+ESRS 2,GOV-3,Statement on due diligence,main body,yes,,,
+ESRS 2,SBM-1,Involvement in activities related to fossil fuel activities,main body,yes,yes,yes,
+ESRS 2,SBM-1,Involvement in activities related to chemical production,main body,yes,,yes,
+ESRS 2,SBM-1,Involvement in activities related to prohibited weapons,main body,yes,,yes,
+ESRS 2,SBM-1,Involvement in activities related to cultivation and production of tobacco,main body,,,yes,
+ESRS 2,GDR-P,Human rights policy,main body,yes,,yes,
+ESRS E1,E1-1,Transition plan for climate change mitigation,main body,,,,yes
+ESRS E1,E1-6,GHG emission reduction targets,main body,yes,yes,yes,
+ESRS E1,E1-7,Energy consumption from fossil sources disaggregated by sources (only high climate impact sectors),main body,yes,,,
+ESRS E1,E1-7,Energy consumption and mix,main body,yes,,,
+ESRS E1,E1-8,"Gross Scope 1, 2, 3 GHG emissions",main body,yes,yes,yes,
+ESRS E1,E1-9,GHG removals and carbon credits,main body,,,,yes
+ESRS E1,E1-11,Exposure of the benchmark portfolio to climate-related physical risks,main body,,,yes,
+ESRS E1,E1-11,Breakdown of the carrying value of its real estate assets by energy- efficiency classes,main body,,yes,,
+ESRS E1,E1-11,Degree of exposure of the portfolio to climate-related opportunities,main body,,,yes,
+ESRS 2,IRO-2,Risk of incidents of forced labour,main body,yes,,,
+ESRS 2,IRO-2,Risk of incidents of child labour,main body,yes,,,
+ESRS 2,GDR-P,Human rights policy commitments,main body,yes,,yes,
+ESRS 2,GOV-1,Board's gender diversity,application requirements,yes,,yes,
+ESRS E1,E1-11,Location of significant assets at material physical risk,application requirements,,yes,,
