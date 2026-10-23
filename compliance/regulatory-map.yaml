@@ -1,0 +1,21 @@
+mappings:
+  - framework: csrd
+    rule: "Directive (EU) 2022/2464 as amended by Directive (EU) 2026/470"
+    requirement: Prepare a sustainability statement in accordance with ESRS
+    control: Drafter outline follows ESRS 2 and E1. Reviewer checks every leaf requirement.
+    evidence: [outputs/coverage.csv, review/findings.csv]
+  - framework: esrs
+    rule: "ESRS E1, Delegated Regulation C(2026) 5010"
+    requirement: Disclose E1-1 to E1-11 where climate is material
+    control: Requirement list in knowledge/standards/esrs-datapoints.csv
+    evidence: [knowledge/standards/esrs-datapoints.csv]
+  - framework: esrs
+    rule: "ESRS 2 Appendix A"
+    requirement: Datapoints derived from other EU legislation
+    control: Missing EU-law datapoints are blocking findings
+    evidence: [knowledge/standards/esrs-eu-law-datapoints.csv]
+  - framework: esrs
+    rule: "ESRS E1 AR 12, AR 20(d), AR 28"
+    requirement: Gross targets and emissions, credits reported separately
+    control: Drafter rules, reviewer coverage-check and claims-check
+    evidence: [review/findings.csv]

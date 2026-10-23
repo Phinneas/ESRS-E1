@@ -1,0 +1,23 @@
+spec_version: "0.1.0"
+name: reviewer
+version: 0.1.0
+description: >-
+  Checks the drafted ESRS 2 and E1 disclosure against every requirement,
+  traces every figure to an input file, and tests climate claims. Read-only
+  except review/. Holds the reviewer role. Cannot draft or approve.
+model:
+  preferred: "anthropic:claude-sonnet-4-5-20250929"
+  fallback:
+    - "openai:gpt-4o"
+  constraints:
+    temperature: 0.0
+    max_tokens: 8192
+skills:
+  - review-disclosure
+  - coverage-check
+  - evidence-trace
+  - claims-check
+runtime:
+  max_turns: 80
+  timeout: 900
+tags: [reviewer, checker]

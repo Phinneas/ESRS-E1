@@ -1,0 +1,34 @@
+documents:
+  - path: standards/esrs-datapoints.csv
+    tags: [esrs-2, esrs-e1, requirements]
+    priority: high
+    always_load: false
+    description: >-
+      Every ESRS 2 and E1 requirement from the adopted revised ESRS, one row per
+      paragraph or item. The reviewer checks coverage against the rows where
+      is_leaf=yes and obligation is shall or may.
+  - path: standards/esrs-application-requirements.csv
+    tags: [esrs-2, esrs-e1, application-requirements]
+    priority: high
+    always_load: false
+    description: Mandatory Application Requirements, mapped to the paragraphs they govern.
+  - path: standards/esrs-eu-law-datapoints.csv
+    tags: [sfdr, pillar3, benchmark, climate-law]
+    priority: medium
+    always_load: false
+    description: Datapoints other EU laws depend on (ESRS 2 Appendix A). Missing ones are higher severity.
+  - path: standards/esrs-e1-text.md
+    tags: [esrs-e1, full-text]
+    priority: medium
+    always_load: false
+    description: Full cleaned text of ESRS E1. Use to quote the standard exactly.
+  - path: standards/esrs2-text.md
+    tags: [esrs-2, full-text]
+    priority: medium
+    always_load: false
+    description: Full cleaned text of ESRS 2.
+  - path: methods/claims-language.md
+    tags: [greenwashing, claims]
+    priority: high
+    always_load: false
+    description: Claim words and patterns the reviewer flags, with what evidence each needs.

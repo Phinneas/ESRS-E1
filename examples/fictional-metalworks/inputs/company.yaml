@@ -1,0 +1,52 @@
+profile:
+  employees: 1340
+  net_revenue: 512000000
+  sites:
+    - {name: "Gävle foundry", country: SE, activity: "Steel casting"}
+    - {name: "Tampere fabrication", country: FI, activity: "Structural steel fabrication"}
+  value_chain: "Buys scrap steel and alloys. Sells structural components to construction and wind-energy customers."
+governance:
+  climate_oversight_body: "Board sustainability committee"
+  climate_in_incentives: true
+  incentive_detail: "10% of executive annual bonus tied to Scope 1 and 2 reduction"
+materiality:
+  climate_material: true
+  method: "Top-down assessment with internal workshops and 14 stakeholder interviews, 2026"
+  impacts:
+    - {description: "GHG emissions from electric arc furnace and gas-fired heat treatment", actual_or_potential: actual, time_horizon: short}
+  risks:
+    - {description: "EU ETS allowance cost increase", type: transition, time_horizon: medium}
+    - {description: "Coastal flooding at Gävle site", type: physical, time_horizon: long}
+  opportunities:
+    - {description: "Demand for low-emission steel in wind towers", time_horizon: medium}
+transition_plan:
+  exists: false
+  expected_adoption: ""          # PLANTED 7: no plan and no adoption date (E1 para 13)
+policies:
+  - {name: "Climate and Energy Policy", covers: [mitigation, energy], scope: "All sites", owner: "COO"}
+actions:
+  - {name: "Switch heat treatment to electric induction", lever: "Fuel switching", status: "In progress", resources: "EUR 8.5m capex 2027-2029", expected_reduction_tco2e: 1100}
+targets:
+  - type: absolute
+    scopes: [1, 2]
+    base_year: 2025
+    base_value_tco2e: 9800
+    target_year: 2030
+    target_value_tco2e: 4900
+    scope2_method: market
+    science_based: true
+    validated_by: ""
+    net_zero_year: 2040
+    residual_neutralisation: ""  # PLANTED 4: net-zero target with no residual plan (E1 AR 11)
+resilience:
+  scenarios_used:
+    - {name: "NGFS Current Policies", type: high_emission, temperature: "3°C+"}
+    - {name: "NGFS Net Zero 2050", type: 1_5c, temperature: "1.5°C"}
+  scope_of_analysis: "Both sites and top 20 suppliers"
+  time_horizons: "short <1y, medium 1-5y, long >5y"
+  findings: "Gävle site flood exposure rises after 2040 under high-emission scenario."
+  uncertainties: "Supplier data coverage is partial."
+internal_carbon_price: []
+financial_effects:
+  assets_at_physical_risk: 41000000
+  revenue_at_transition_risk: 96000000

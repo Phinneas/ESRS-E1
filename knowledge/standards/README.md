@@ -3,7 +3,7 @@
 Source: revised ESRS adopted by the Commission on 3 July 2026, Delegated Regulation C(2026) 5010, Annex I. Taken from the copy sent to the Council: ST 11667/26 ADD 1 (9 July 2026).
 https://data.consilium.europa.eu/doc/document/ST-11667-2026-ADD-1/en/pdf
 
-Not yet the Official Journal text. Re-run `tools/parse_esrs.py` when the OJ version is published and diff the CSVs.
+Not yet the Official Journal text. Re-run `scripts/parse_esrs.py` when the OJ version is published and diff the CSVs.
 
 ## Files
 
@@ -36,3 +36,4 @@ These are requirement rows, not the Commission's datapoint count. One row can ho
 - Tables inside ARs (energy and GHG reporting templates) are kept as AR text, not split into rows.
 - The `conditional` flag is a keyword match.
 - Footnote markers glued to words were stripped by pattern. A few may remain.
+- AR 24 (Scope 3) is labelled "for para. 30(c)" in the source, so the table maps it to 30(c). It reads as Scope 3 guidance, which is 30(a)(iii).

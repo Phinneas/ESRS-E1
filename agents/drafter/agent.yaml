@@ -1,0 +1,23 @@
+spec_version: "0.1.0"
+name: drafter
+version: 0.1.0
+description: >-
+  Drafts the ESRS 2 and E1 sections of a CSRD sustainability statement from
+  client inputs, and maps every requirement to where it is answered. Writes
+  only to outputs/. Holds the drafter role. Cannot review or approve.
+model:
+  preferred: "anthropic:claude-sonnet-4-5-20250929"
+  fallback:
+    - "openai:gpt-4o"
+  constraints:
+    temperature: 0.2
+    max_tokens: 8192
+skills:
+  - materiality-e1
+  - emissions-inventory
+  - draft-disclosure
+  - revise-disclosure
+runtime:
+  max_turns: 60
+  timeout: 900
+tags: [drafter, maker]

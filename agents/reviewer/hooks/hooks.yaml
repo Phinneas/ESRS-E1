@@ -1,0 +1,4 @@
+hooks:
+  pre_tool_use:
+    - script: guard.sh
+      description: Enforce reviewer permissions. Blocks anything not explicitly allowed.

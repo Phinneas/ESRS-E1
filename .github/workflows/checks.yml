@@ -1,0 +1,62 @@
+name: checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    env:
+      GITAGENT_VERSION: "2.2.0"   # runtime the guards are tested against
+      OPENGAP_VERSION: "0.5.0"    # spec CLI for validate and audit
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install pinned tools
+        run: |
+          # Both packages ship a "gitagent" binary, so keep them apart.
+          for d in runtime spec; do mkdir -p "$RUNNER_TEMP/$d" && (cd "$RUNNER_TEMP/$d" && npm init -y >/dev/null); done
+          (cd "$RUNNER_TEMP/runtime" && npm i --no-audit --no-fund "@open-gitagent/gitagent@$GITAGENT_VERSION")
+          (cd "$RUNNER_TEMP/spec" && npm i --no-audit --no-fund "@open-gitagent/opengap@$OPENGAP_VERSION")
+          pip install pyyaml==6.0.2
+
+      - name: Validate agent definitions
+        run: |
+          G="$RUNNER_TEMP/spec/node_modules/.bin/opengap"
+          "$G" validate --compliance
+          "$G" validate -d agents/drafter
+          "$G" validate -d agents/reviewer
+          "$G" audit
+
+      - name: Guard tests against the real runtime
+        run: node scripts/test_guard.mjs "$RUNNER_TEMP/runtime/node_modules/@open-gitagent/gitagent"
+
+      - name: Example engagement catches every planted data problem
+        run: |
+          set +e
+          python -I scripts/check.py inputs examples/fictional-metalworks --json > "$RUNNER_TEMP/got.json"
+          set -e
+          python -I - "$RUNNER_TEMP/got.json" examples/fictional-metalworks/expected-script-failures.json <<'EOF'
+          import json, sys
+          got = {i["code"] for i in json.load(open(sys.argv[1])) if i["result"] == "fail"}
+          want = set(json.load(open(sys.argv[2])))
+          if got != want:
+              print("missed:", sorted(want - got)); print("unexpected:", sorted(got - want)); sys.exit(1)
+          print(f"all {len(want)} planted problems caught, no false positives")
+          EOF
+
+      - name: Coverage check on a real engagement
+        if: hashFiles('outputs/coverage.csv') != ''
+        run: python -I scripts/check.py coverage .

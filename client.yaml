@@ -1,0 +1,40 @@
+# The one file a consultant edits per engagement.
+# Agents read this file. They never change it.
+
+company:
+  legal_name: ""             # e.g. "Nordvik Industrier AB"
+  reporting_period: ""       # e.g. "FY2027" or "2027-01-01/2027-12-31"
+  consolidation: consolidated   # consolidated | individual
+  boundary_approach: financial_control   # financial_control | operational_control | equity_share (E1 AR 19)
+  nace_codes: []             # main activities, e.g. ["C.25.1"]
+  currency: EUR
+  high_climate_impact_sector: false   # turns on the E1-7 para 27 fossil fuel breakdown
+
+standard:
+  version: "ESRS (2026)"     # Delegated Regulation C(2026) 5010
+  topics: [ESRS 2, ESRS E1]
+
+materiality:
+  climate_material: null     # true | false | null (not assessed yet). If false, E1 needs a detailed explanation (ESRS 1 para 30).
+
+emissions:
+  # reported:   the client supplies Scope 1, 2, 3 totals. The drafter reports them and checks they add up.
+  # calculated: the client supplies activity data and emission factors. The drafter calculates and shows its working.
+  mode: reported
+  scope3_significant_categories: []   # e.g. [1, 4, 11]
+
+inputs:
+  format: yaml               # yaml | csv
+  folder: inputs/
+
+output:
+  format: markdown           # markdown (docx export planned)
+  language: en
+
+review:
+  max_rounds: 2              # reviewer passes before handing to the consultant
+  blocking_severities: [blocking]   # findings that stop a release
+
+approval:
+  consultant_name: ""
+  consultant_git_email: ""   # the approval commit must come from this address

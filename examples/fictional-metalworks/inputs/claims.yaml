@@ -1,0 +1,6 @@
+- text: "Our operations have been carbon neutral since 2025."   # PLANTED 10: neutrality claim resting on credits
+  where: "Company website, sustainability page"
+  evidence: "inputs/emissions.yaml#carbon_credits"
+- text: "We make the greenest structural steel in the Nordics."
+  where: "Product brochure"   # PLANTED 11: generic superlative with no evidence
+  evidence: ""

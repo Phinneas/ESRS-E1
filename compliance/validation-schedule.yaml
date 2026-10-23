@@ -1,0 +1,13 @@
+schedule:
+  - check: Rebuild requirement tables from the Official Journal text and diff
+    when: On publication of the revised ESRS in the Official Journal, then on any amendment
+    owner: maintainer
+  - check: Run scripts/test_guard.mjs against the pinned gitagent runtime
+    when: Every runtime upgrade and every release
+    owner: maintainer
+  - check: Run opengap validate --compliance and opengap audit
+    when: Every release
+    owner: maintainer
+  - check: Run the example engagement end to end and compare findings with the expected list
+    when: Every release
+    owner: maintainer

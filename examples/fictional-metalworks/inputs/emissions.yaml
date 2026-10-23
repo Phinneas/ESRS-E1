@@ -1,0 +1,34 @@
+period: FY2027
+boundary: operational_control    # PLANTED 6: differs from client.yaml financial_control (E1 AR 19)
+gwp_set: AR6
+scope1:
+  total_tco2e: 5200
+  eu_ets_tco2e: 3900
+  by_source: {stationary: 4100, mobile: 350, process: 450, fugitive: 50}   # PLANTED 2: sums to 4950, not 5200
+scope2:
+  location_based_tco2e: 2600
+  # PLANTED 1: market_based_tco2e missing (E1-8 para 30(a)(ii))
+scope3:
+  screening_note: ""             # PLANTED 8: no screening of the 15 categories (E1 AR 24(b))
+  categories:
+    - {number: 1, name: "Purchased goods and services", tco2e: 61000, method: hybrid}
+    - {number: 4, name: "Upstream transportation and distribution", tco2e: 7400, method: activity}
+    - {number: 11, name: "Use of sold products", tco2e: 1800, method: spend}
+biogenic_co2_tco2e: 120
+consolidated_group_split:
+  scope1_consolidated: 5000
+  scope1_other: 100              # PLANTED 3: 5000 + 100 is not 5200 (E1-8 para 30(c))
+  scope2_consolidated: 2600
+  scope2_other: 0
+removals: []
+carbon_credits:
+  cancelled_tco2e: 8000
+  purchased_not_cancelled_tco2e: 2000
+  standards: ["Verra VCS", "Supplier forest project in own value chain"]   # PLANTED 9: own value chain credits (E1 AR 28(b))
+  nature_based_pct: 100
+  planned_future_cancellations_tco2e: 6000
+comparative:
+  year: 2025
+  scope1_tco2e: 6400
+  scope2_location_tco2e: 3400
+  scope3_tco2e: 70100

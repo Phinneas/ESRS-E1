@@ -1,0 +1,116 @@
+spec_version: "0.1.0"
+name: esrs-e1-orchestrator
+version: 0.1.0
+description: >-
+  Coordinates a maker-checker run for an ESRS E1 climate disclosure under the
+  revised ESRS (adopted 3 July 2026). Sends work to the drafter, then the
+  reviewer, and stops for consultant approval. Never writes disclosure content
+  or findings itself.
+author: Salish Sea Consulting
+license: proprietary
+
+model:
+  preferred: "anthropic:claude-sonnet-4-5-20250929"
+  fallback:
+    - "openai:gpt-4o"
+  constraints:
+    temperature: 0.1
+    max_tokens: 4096
+
+skills:
+  - run-engagement
+
+agents:
+  drafter:
+    description: Drafts the ESRS 2 and E1 disclosure from client inputs. Writes only to outputs/.
+    delegation:
+      mode: explicit
+  reviewer:
+    description: Checks the draft against every ESRS 2 and E1 requirement. Read-only except review/.
+    delegation:
+      mode: explicit
+
+delegation:
+  mode: explicit
+
+runtime:
+  max_turns: 40
+  timeout: 600
+
+compliance:
+  risk_tier: high
+  frameworks:
+    - csrd
+    - esrs
+  supervision:
+    designated_supervisor: engagement-consultant
+    review_cadence: annual
+    human_in_the_loop: always
+    escalation_triggers:
+      - error_detected: true
+    override_capability: true
+    kill_switch: true
+  recordkeeping:
+    audit_logging: true
+    log_format: structured_json
+    retention_period: 10y
+    log_contents:
+      - prompts_and_responses
+      - tool_calls
+      - decision_pathways
+      - model_version
+      - timestamps
+    immutable: true
+  data_governance:
+    pii_handling: redact
+    data_classification: confidential
+    consent_required: true
+    cross_border: true
+    bias_testing: false
+    lda_search: false
+  communications:
+    type: institutional
+    pre_review_required: true
+    fair_balanced: true
+    no_misleading: true
+    disclosures_required: true
+  segregation_of_duties:
+    roles:
+      - id: drafter
+        description: Prepares disclosure content from client inputs
+        permissions: [create, submit]
+      - id: reviewer
+        description: Checks the draft against the standard and records findings. Cannot edit the draft.
+        permissions: [review, reject, report]
+      - id: approver
+        description: Human consultant who signs off the final disclosure
+        permissions: [approve]
+    conflicts:
+      - [drafter, reviewer]
+      - [drafter, approver]
+      - [reviewer, approver]
+    assignments:
+      drafter: [drafter]
+      reviewer: [reviewer]
+      engagement-consultant: [approver]
+    isolation:
+      state: full
+      credentials: separate
+    handoffs:
+      - action: disclosure_release
+        required_roles: [drafter, reviewer, approver]
+        approval_required: true
+    enforcement: strict
+
+tags:
+  - csrd
+  - esrs
+  - esrs-e1
+  - climate
+  - maker-checker
+metadata:
+  standard: "ESRS (2026), Delegated Regulation C(2026) 5010"
+  scope: "ESRS 2 and ESRS E1"
+  enforcement_note: >-
+    The gitagent CLI does not enforce segregation_of_duties or the tools list
+    at runtime. Each agent's hooks/guard.sh does. See DUTIES.md.

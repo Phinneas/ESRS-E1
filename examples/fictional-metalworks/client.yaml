@@ -1,0 +1,31 @@
+# FICTIONAL EXAMPLE. Harbourline Metalworks AB does not exist.
+# Every figure is invented to test the agents. Eleven problems are planted on purpose.
+# See expected-findings.md for the answer key.
+company:
+  legal_name: "Harbourline Metalworks AB (fictional)"
+  reporting_period: "FY2027"
+  consolidation: consolidated
+  boundary_approach: financial_control
+  nace_codes: ["C.25.1", "C.24.5"]
+  currency: EUR
+  high_climate_impact_sector: true
+standard:
+  version: "ESRS (2026)"
+  topics: [ESRS 2, ESRS E1]
+materiality:
+  climate_material: true
+emissions:
+  mode: reported
+  scope3_significant_categories: [1, 4, 11]
+inputs:
+  format: yaml
+  folder: inputs/
+output:
+  format: markdown
+  language: en
+review:
+  max_rounds: 2
+  blocking_severities: [blocking]
+approval:
+  consultant_name: "Example Consultant"
+  consultant_git_email: "consultant@example.com"

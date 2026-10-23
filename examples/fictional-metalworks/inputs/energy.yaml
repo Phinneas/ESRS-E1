@@ -1,0 +1,13 @@
+unit: MWh
+fossil_total: 21400
+nuclear_total: 6100
+renewable_total: 30500
+fossil_breakdown:
+  coal: 0
+  oil: 900
+  natural_gas: 15800
+  other_fossil: 0
+  purchased_fossil: 4700
+production:
+  renewable: 0
+  non_renewable: 0
