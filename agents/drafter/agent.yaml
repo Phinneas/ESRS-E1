@@ -6,12 +6,12 @@ description: >-
   client inputs, and maps every requirement to where it is answered. Writes
   only to outputs/. Holds the drafter role. Cannot review or approve.
 model:
-  preferred: "anthropic:claude-sonnet-4-5-20250929"
+  preferred: "zai:glm-5.1"
   fallback:
     - "openai:gpt-4o"
   constraints:
     temperature: 0.2
-    max_tokens: 8192
+    max_tokens: 32768
 skills:
   - materiality-e1
   - emissions-inventory
