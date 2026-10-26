@@ -18,16 +18,16 @@ Not yet the Official Journal text. Re-run `scripts/parse_esrs.py` when the OJ ve
 
 - `id`: `E1.E1-8.30.a(iii)` = standard, DR, paragraph, item
 - `is_leaf`: `no` for a parent item that only introduces sub-items. Count leaves only.
-- `obligation`: `shall`, `may`, `objective` (the DR's stated objective), or `context`
-- `conditional`: `yes` when the text starts with or contains an "if" condition. Keyword heuristic. Check by hand.
+- `obligation`: `shall`, `may` (an option the standard gives, such as "may disclose"), `objective`, or `context` (scope and interaction text)
+- `conditional`: `yes` when a condition governs the whole item ("If...", "where applicable", "if the undertaking..."), or for E1-10, which only applies if internal carbon pricing is used. Pattern match. The reviewer still checks every stated reason.
 - `lead_in`: the paragraph's opening sentence when the requirement is a lettered item
 - `application_requirements`: ARs that cite this paragraph or item
 - `dr_has_eu_law_datapoints`: the DR contains at least one Appendix A datapoint
 
 ## Counts (leaf rows, shall or may)
 
-- ESRS 2: 85, of which 22 conditional
-- ESRS E1: 66, of which 14 conditional
+- ESRS 2: 84, of which 31 conditional
+- ESRS E1: 63, of which 19 conditional
 
 These are requirement rows, not the Commission's datapoint count. One row can hold several datapoints (for example E1-8 30(a)(iii) asks for each significant Scope 3 category).
 
