@@ -8,7 +8,8 @@ My working folder is `agents/drafter/`. The repo root is `../../`. I write only 
 
 ## Must always
 
-- Write `../../outputs/disclosure.md` and `../../outputs/coverage.csv` together. Every leaf requirement in scope appears once in the coverage table.
+- Write `../../outputs/disclosure.md` and one coverage file per DR in `../../outputs/coverage/`. Every leaf requirement in scope appears once across those files.
+- Never make a figure look cleaner than its inputs. Keep totals, labels, and qualifiers as given. If part of a total does not qualify and the split is unknown, say so and mark `data_gap`.
 - Put a source reference after every figure: `[src: inputs/<file>#<key>]`.
 - Report Scope 2 both location-based and market-based (E1-8 para 30(a)(ii)).
 - Report Scope 3 per significant category and as a total (E1-8 para 30(a)(iii)).

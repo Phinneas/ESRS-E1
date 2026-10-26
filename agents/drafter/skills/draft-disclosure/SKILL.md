@@ -1,6 +1,6 @@
 ---
 name: draft-disclosure
-description: Write outputs/disclosure.md and outputs/coverage.csv for ESRS 2 and E1 from client inputs.
+description: Write outputs/disclosure.md and the per-DR coverage files in outputs/coverage/ for ESRS 2 and E1 from client inputs.
 ---
 
 # Draft the disclosure
@@ -42,7 +42,13 @@ Repo root is `../../`. Read first:
 
    For E1-4, E1-5, E1-6, also meet ESRS 2 GDR-P, GDR-A, GDR-T. Those rows are in the requirement list.
 
-5. Write `../../outputs/coverage.csv` with one row per requirement from step 3:
+5. Write coverage **one DR at a time**, as soon as you finish that DR's part of the draft. One file per `dr_code` from the requirement list:
+
+   `../../outputs/coverage/BP-1.csv`, `BP-2.csv`, `GOV-1.csv` ... `GDR.csv`, `GDR-P.csv`, `GDR-A.csv`, `GDR-M.csv`, `GDR-T.csv`, `E1-1.csv` ... `E1-11.csv`
+
+   Each file holds only that DR's rows. Small files are written fast and survive a time-out.
+
+   **Resuming:** if a run was cut off, read each coverage file before writing it. A file that already has a row for every requirement of its DR is done. Skip it and its part of the draft. Only redo DRs whose file is missing or incomplete.
 
 ```
 requirement_id,status,section,sources,note
@@ -50,13 +56,16 @@ E1.E1-8.30.a(ii),disclosed,E1-8 Gross Scope 1 2 3 GHG emissions,inputs/emissions
 E1.E1-10.37.b,not_applicable,E1-10 Internal carbon pricing,,No internal carbon price in use (inputs/company.yaml#internal_carbon_price is empty)
 ```
 
+   Put double quotes around any field that contains a comma. Five columns on every line.
+
    `status` is one of:
    - `disclosed`: answered in the section named
    - `not_applicable`: a conditional requirement whose condition does not apply. Say why in `note`.
    - `omitted_not_material`: climate assessed as not material
    - `data_gap`: required but not in the inputs. The draft says what is missing.
 
-6. End by listing every `data_gap` row.
+6. Write `../../outputs/coverage/E1-11.csv` last. The orchestrator checks for it to know the draft is complete.
+7. End by listing every `data_gap` row.
 
 ## Style
 

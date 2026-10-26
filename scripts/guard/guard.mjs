@@ -14,8 +14,11 @@ import { homedir } from "node:os";
 
 const [role, rootArg] = process.argv.slice(2);
 
-function out(action, reason) {
-  process.stdout.write(JSON.stringify(reason ? { action, reason } : { action }) + "\n");
+function out(action, reason, args) {
+  const result = { action };
+  if (reason) result.reason = reason;
+  if (args) result.args = args;
+  process.stdout.write(JSON.stringify(result) + "\n");
   process.exit(0);
 }
 const allow = () => out("allow");
@@ -105,7 +108,10 @@ try {
       if (!p.cli) block("shell commands are not allowed for this role");
       const cmd = typeof args.command === "string" ? args.command.trim() : "";
       if (!p.cli.test(cmd)) block(`shell command not on the allowlist: ${cmd.slice(0, 120)}`);
-      allow();
+      // Sub-agent runs are long. Do not let the model pick its own time limit:
+      // in the first live run it chose 5 minutes and killed the drafter mid-write.
+      const timeout = Number(process.env.ESRS_SUBAGENT_TIMEOUT_SECONDS) || 3600;
+      out("modify", undefined, { command: cmd, timeout });
     }
     default:
       // memory, capture_photo, task_tracker, skill_learner, MCP and plugin tools

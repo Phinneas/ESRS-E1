@@ -67,8 +67,8 @@ const T = [
   ["drafter", "write", { path: "../../knowledge/standards/esrs-datapoints.csv", content: "x" }, "block"],
   ["drafter", "cli", { command: "git commit -am approve" }, "block"],
   // orchestrator
-  ["orchestrator", "cli", { command: 'gitagent --dir agents/drafter -p "Draft E1 from inputs/company.yaml"' }, "allow"],
-  ["orchestrator", "cli", { command: 'gitagent --dir agents/reviewer -p "Review outputs/disclosure.md"' }, "allow"],
+  ["orchestrator", "cli", { command: 'gitagent --dir agents/drafter -p "Draft E1 from inputs/company.yaml"' }, "modify"],
+  ["orchestrator", "cli", { command: 'gitagent --dir agents/reviewer -p "Review outputs/disclosure.md"', timeout: 300 }, "modify"],
   ["orchestrator", "cli", { command: 'gitagent --dir agents/reviewer -p "x"; rm -rf review' }, "block"],
   ["orchestrator", "cli", { command: 'gitagent --dir agents/reviewer -p "$(cat /etc/passwd)"' }, "block"],
   ["orchestrator", "cli", { command: 'gitagent --dir agents/reviewer -p "x" && git tag v1' }, "block"],
@@ -81,6 +81,15 @@ const T = [
 console.log("\n== Hook decisions (runtime runHooks) ==");
 for (const [role, tool, args, want] of T)
   check(`${role} ${tool} ${args.path || args.command || ""}`, await decide(role, tool, args), want);
+
+// The guard forces the sub-agent time limit, whatever the model asked for.
+{
+  const cfg = await loadHooksConfig(DIRS.orchestrator);
+  const r = await runHooks(cfg.hooks.pre_tool_use, DIRS.orchestrator,
+    { event: "pre_tool_use", session_id: "t", tool: "cli", args: { command: 'gitagent --dir agents/drafter -p "x"', timeout: 300 } });
+  check("orchestrator sub-agent timeout forced to 3600s (model asked 300)", String(r.args && r.args.timeout), "3600");
+  check("  ...command passed through unchanged", r.args && r.args.command, 'gitagent --dir agents/drafter -p "x"');
+}
 
 // End-to-end: real runtime tools wrapped with real hooks. Blocked writes must not land.
 console.log("\n== Wrapped runtime tools (real file writes) ==");
