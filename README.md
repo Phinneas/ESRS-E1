@@ -56,7 +56,7 @@ Needs Node 18+, git, Python 3 with PyYAML, and a model API key.
 
 ```bash
 npm install -g @open-gitagent/gitagent@2.2.0      # the runtime ("gitagent" command)
-export ANTHROPIC_API_KEY=...                      # or OPENAI_API_KEY for the fallback
+mkdir -p ~/.gitagent && echo "ANTHROPIC_API_KEY=..." >> ~/.gitagent/.env   # never in the repo
 
 # 1. fill in client.yaml and put client data in inputs/
 python -I scripts/check.py inputs .               # catch data problems before any model run

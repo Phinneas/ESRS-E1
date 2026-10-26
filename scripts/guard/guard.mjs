@@ -86,6 +86,7 @@ try {
       const t = realTarget(args.path);
       if (!t) block("read without a path");
       if (!(t === root || inside(t, root))) block(`read outside the repo: ${args.path}`);
+      if (/(^|[\/])\.env$|\.env$/.test(t)) block(`reading secrets files is not allowed: ${args.path}`);
       if ((p.deny_read || []).some((d) => t === resolve(root, d) || inside(t, resolve(root, d))))
         block(`read not allowed here: ${args.path}`);
       if (p.read.length && !p.read.some((d) => t === resolve(root, d) || inside(t, resolve(root, d))))
