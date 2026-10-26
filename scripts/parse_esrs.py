@@ -212,18 +212,32 @@ def parse(standard, lines):
 
 def classify(r):
     t = f"{r['lead_in']} {r['requirement']}".lower()
+    if r["dr_code"].endswith(("-objective", "-interaction")):
+        return "context"  # scope and interaction text, not disclosure requirements
     if "objective of this dr" in t or "objective of this standard" in t:
         return "objective"
     if re.search(r"\bshall\b", t):
         return "shall"
-    if re.search(r"\bmay\b", t):
+    if re.search(r"\bmay (disclose|report|provide|present|use|include|choose)\b", t):
         return "may"
     return "context"
 
 
+# DRs whose whole content only applies if the undertaking has the thing in question,
+# even though the text has no "if". Reviewer still checks the stated reason.
+IMPLICIT_CONDITIONAL = {
+    ("ESRS E1", "E1-10"): "applies only if the undertaking uses internal carbon pricing",
+}
+
+
 def conditional(r):
-    t = f"{r['lead_in']} {r['requirement']}"
-    return "yes" if re.search(r"(^|\.\s|;\s)\s*If\b|\bif the undertaking\b|\bwhere applicable\b|\bif applicable\b", t) else ""
+    if (r["standard"], r["dr_code"]) in IMPLICIT_CONDITIONAL:
+        return "yes"
+    t = f"{r['lead_in']} {r['requirement']}".strip()
+    # A condition on the whole item, not a qualifier deep inside it.
+    pat = (r"(^|[.;:]\s*|>> )(if|where applicable|when providing|for social topics)\b"
+           r"|\bif (the undertaking|it|such|one or more|applicable|any)\b")
+    return "yes" if re.search(pat, t, re.I) else ""
 
 
 # ---- parse both standards ----

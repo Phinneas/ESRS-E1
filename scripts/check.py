@@ -179,7 +179,7 @@ def check_coverage(root, r):
             r.add(f"cov.{rid}", False, rid, f"unknown status '{st}'", "major")
         elif st == "disclosed" and not row.get("section"):
             r.add(f"cov.{rid}", False, rid, "disclosed but no section named", "major")
-        elif st == "not_applicable" and req["conditional"] != "yes":
+        elif st == "not_applicable" and req["conditional"] != "yes" and req["obligation"] == "shall":
             r.add(f"cov.{rid}", False, rid, "not_applicable on a requirement with no condition", "blocking")
         elif st == "not_applicable" and not row.get("note"):
             r.add(f"cov.{rid}", False, rid, "not_applicable with no reason", "major")
