@@ -3,7 +3,7 @@ mappings:
     rule: "Directive (EU) 2022/2464 as amended by Directive (EU) 2026/470"
     requirement: Prepare a sustainability statement in accordance with ESRS
     control: Drafter outline follows ESRS 2 and E1. Reviewer checks every leaf requirement.
-    evidence: [outputs/coverage.csv, review/findings.csv]
+    evidence: [outputs/coverage/, review/findings.csv]
   - framework: esrs
     rule: "ESRS E1, Delegated Regulation C(2026) 5010"
     requirement: Disclose E1-1 to E1-11 where climate is material

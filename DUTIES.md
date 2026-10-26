@@ -23,7 +23,7 @@ No agent may hold two roles. The maker cannot review or approve its own work.
 
 ## Handoff: disclosure_release
 
-1. Drafter writes `outputs/disclosure.md` and `outputs/coverage.csv`.
+1. Drafter writes `outputs/disclosure.md` and one coverage file per DR in `outputs/coverage/`.
 2. Reviewer writes `review/findings.md` and `review/findings.csv`. It cannot change the draft.
 3. Drafter revises against open findings. Steps 2 and 3 repeat up to `review.max_rounds`.
 4. Consultant reads the draft and findings, then commits `approvals/<period>.md` and tags the release.

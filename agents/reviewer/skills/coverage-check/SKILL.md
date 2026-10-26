@@ -13,11 +13,11 @@ From `../../knowledge/standards/esrs-datapoints.csv`, take rows where `is_leaf =
 
 ## For each requirement
 
-1. Find its row in `../../outputs/coverage.csv`. Missing row → **blocking** (if `shall`) or **minor** (if `may`).
+1. Find its row in `../../outputs/coverage/<dr_code>.csv`. Missing row → **blocking** (if `shall`) or **minor** (if `may`).
 2. `disclosed`: open the named section in the draft. Check the text actually answers the requirement wording in the CSV. Not answered → **blocking**.
 3. `not_applicable`: the CSV row must have `conditional = yes`, and the note must say why the condition does not hold, pointing to an input. Otherwise → **major**. A non-conditional requirement marked not_applicable → **blocking**.
 4. `omitted_not_material`: allowed only if climate is assessed not material. Then check the draft has the detailed explanation (E1 para 1, ESRS 1 para 30). Missing → **blocking**.
-5. `data_gap`: check the draft says what is missing. Raise one **blocking** finding per gap, so the consultant sees it.
+5. `data_gap`: check the draft says what is missing. Raise one **blocking** finding per gap with `check = data_gap`, so the consultant sees it. If the draft is vague about what is missing, use `check = coverage` instead.
 6. Read the `application_requirements` column. Open those ARs in `esrs-application-requirements.csv` and test the ones that state a "shall". A missed AR → **major**.
 
 ## Requirements to test closely

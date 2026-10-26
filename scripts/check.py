@@ -11,6 +11,7 @@ These checks back up the reviewer agent. They do not replace it: claims,
 wording, and whether text answers a requirement still need the reviewer.
 """
 import csv
+import glob
 import json
 import os
 import re
@@ -161,13 +162,31 @@ def check_inputs(root, r):
 
 
 def check_coverage(root, r):
-    path = os.path.join(root, "outputs", "coverage.csv")
-    if not os.path.exists(path):
-        r.add("coverage.missing", False, "-", "outputs/coverage.csv not found", "blocking")
+    single = os.path.join(root, "outputs", "coverage.csv")
+    folder = os.path.join(root, "outputs", "coverage")
+    files = sorted(glob.glob(os.path.join(folder, "*.csv"))) or ([single] if os.path.exists(single) else [])
+    if not files:
+        r.add("coverage.missing", False, "-", "no coverage files in outputs/coverage/", "blocking")
         return
     reqs = {x["id"]: x for x in csv.DictReader(open(REQS, encoding="utf-8"))
             if x["is_leaf"] == "yes" and x["obligation"] in ("shall", "may")}
-    rows = {x["requirement_id"]: x for x in csv.DictReader(open(path, encoding="utf-8"))}
+    rows = {}
+    for f in files:
+        reader = csv.reader(open(f, encoding="utf-8"))
+        header = next(reader, None) or []
+        for n, cells in enumerate(reader, 2):
+            if not cells:
+                continue
+            if len(cells) != len(header):
+                where = f"{os.path.relpath(f, root)} line {n}"
+                r.add(f"cov.malformed.{os.path.basename(f)}.{n}", False, cells[0] if cells else "-",
+                      f"{where} has {len(cells)} columns, header has {len(header)}. Quote fields that contain commas.", "major")
+                cells = (cells + [""] * len(header))[:len(header)]
+            rows[cells[0]] = dict(zip(header, cells))
+    if files != [single]:
+        have = {os.path.splitext(os.path.basename(f))[0] for f in files}
+        for dr in sorted({x["dr_code"] for x in reqs.values()} - have):
+            r.add(f"cov.file.{dr}", False, dr, f"outputs/coverage/{dr}.csv missing", "blocking")
     statuses = {"disclosed", "not_applicable", "omitted_not_material", "data_gap"}
     for rid, req in reqs.items():
         row = rows.get(rid)
